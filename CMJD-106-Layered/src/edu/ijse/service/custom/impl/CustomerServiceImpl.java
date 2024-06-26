@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
     
     @Override
-    public String delete(CustomerDto customerDto) throws Exception {
+    public String delete(String custIdString) throws Exception {
        return null; 
     }
     @Override
@@ -37,4 +37,5 @@ public class CustomerServiceImpl implements CustomerService{
     public ArrayList<CustomerDto> getAll() throws Exception {
         return null;
     }
+
 }
