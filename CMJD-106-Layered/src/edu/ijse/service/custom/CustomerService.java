@@ -16,7 +16,7 @@ public interface CustomerService extends SuperService {
     
     String save(CustomerDto customerDto)throws Exception;
     String update(CustomerDto customerDto)throws Exception;
-    String delete(CustomerDto customerDto)throws Exception;
+    String delete(String custId)throws Exception;
     CustomerDto get(String custId)throws Exception;
     ArrayList<CustomerDto>getAll()throws Exception;
 }
