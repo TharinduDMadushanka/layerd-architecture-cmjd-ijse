@@ -4,10 +4,19 @@
  */
 package edu.ijse.service.custom;
 
+import edu.ijse.dto.CustomerDto;
+import edu.ijse.service.SuperService;
+import java.util.ArrayList;
+
 /**
  *
  * @author ASUS
  */
-public interface CustomerService {
+public interface CustomerService extends SuperService {
     
+    String save(CustomerDto customerDto)throws Exception;
+    String update(CustomerDto customerDto)throws Exception;
+    String delete(CustomerDto customerDto)throws Exception;
+    CustomerDto get(String custId)throws Exception;
+    ArrayList<CustomerDto>getAll()throws Exception;
 }
