@@ -29,7 +29,7 @@ public class ItemController {
         return itemService.delete(itemCode);
     }
     
-    public ArrayList<ItemDto> gelAll()throws Exception{
+    public ArrayList<ItemDto> getAll()throws Exception{
         return itemService.getAll();
     }
     

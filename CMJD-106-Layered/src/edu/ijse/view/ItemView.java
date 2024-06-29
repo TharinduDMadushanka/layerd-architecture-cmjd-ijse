@@ -7,8 +7,6 @@ package edu.ijse.view;
 import edu.ijse.controller.ItemController;
 import edu.ijse.dto.ItemDto;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +24,7 @@ public class ItemView extends javax.swing.JFrame {
     public ItemView() throws Exception {
         initComponents();
         itemController = new ItemController();
-        
+        loadTable();
     }
 
     /**
@@ -176,7 +174,7 @@ public class ItemView extends javax.swing.JFrame {
                                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(43, 43, 43))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
+                                .addGap(33, 33, 33)
                                 .addComponent(txtPack, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -233,17 +231,17 @@ public class ItemView extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        
+        updateItem();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        
+        deleteItem();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        
+        saveItem();
     }//GEN-LAST:event_btnSaveActionPerformed
   
     private void txtPackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackActionPerformed
@@ -252,7 +250,7 @@ public class ItemView extends javax.swing.JFrame {
 
     private void tblItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblItemMouseClicked
         // TODO add your handling code here:
-        
+        searchItem();
     }//GEN-LAST:event_tblItemMouseClicked
 
     /**
@@ -308,9 +306,9 @@ public class ItemView extends javax.swing.JFrame {
     private javax.swing.JTextField txtQoh;
     private javax.swing.JTextField txtUnitprice;
     // End of variables declaration//GEN-END:variables
-  
+
     // Save data
-   private void saveItem() {
+     private void saveItem() {
         try {
             ItemDto dto = new ItemDto(txtCode.getText(), txtDescription.getText(), txtPack.getText(), Integer.parseInt(txtQoh.getText()), Double.parseDouble(txtUnitprice.getText()));
             String resp = itemController.save(dto);
@@ -322,15 +320,17 @@ public class ItemView extends javax.swing.JFrame {
         }
 
     }
-
-    private void clearForm() {
+    
+    // clear form after saving data
+      private void clearForm() {
         txtCode.setText("");
         txtDescription.setText("");
         txtPack.setText("");
         txtQoh.setText("");
         txtUnitprice.setText("");
     }
-
+    
+    // show all data in db
     private void loadTable() {
         try {
             String columns[] = {"Item Id", "Item Description", "Pack Size", "Unit Price", "QoH"};
@@ -342,7 +342,7 @@ public class ItemView extends javax.swing.JFrame {
             };
             tblItem.setModel(dtm);
 
-            ArrayList<ItemDto> itemDtos = itemController.gelAll();
+            ArrayList<ItemDto> itemDtos = itemController.getAll();
             for (ItemDto dto : itemDtos) {
                 Object[] rowData = {dto.getItemCode(), dto.getDescription(), dto.getPack(), dto.getUnitPrice(), dto.getQoh()};
                 dtm.addRow(rowData);
@@ -351,7 +351,7 @@ public class ItemView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error at Loading Data to Item Table");
         }
     }
-
+    
     private void searchItem() {
         try {
             String itemId = tblItem.getValueAt(tblItem.getSelectedRow(), 0).toString();
@@ -371,8 +371,8 @@ public class ItemView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error at loading Item");
         }
     }
-
-    private void deleteItem(){
+    
+      private void deleteItem(){
         try {
             String itemCode = txtCode.getText();
             String resp = itemController.delete(itemCode);
@@ -383,7 +383,7 @@ public class ItemView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error at Delete Item");
         }
     }
-
+    
     private void updateItem() {
         try {
             ItemDto itemDto = new ItemDto(txtCode.getText() ,txtDescription.getText(), txtPack.getText(), Integer.parseInt(txtQoh.getText()) , Double.parseDouble(txtUnitprice.getText()));
@@ -391,7 +391,7 @@ public class ItemView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, resp);
             loadTable();
             clearForm();
-
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error at update Item");
         }

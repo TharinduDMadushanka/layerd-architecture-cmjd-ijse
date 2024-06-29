@@ -4,6 +4,8 @@
  */
 package edu.ijse;
 
+import edu.ijse.view.ItemView;
+
 /**
  *
  * @author ASUS
@@ -13,9 +15,9 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // TODO code application logic here
-        System.out.println("Hello");
+        new ItemView().setVisible(true);
     }
     
 }
