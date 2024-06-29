@@ -32,7 +32,7 @@ public class CustomerController {
         return customerService.getAll();
     }
     
-    public CustomerDto get(String custId)throws Exception{
-        return customerService.get(custId);
+    public CustomerDto getCustomer(String custId)throws Exception{
+        return customerService.getCustomer(custId);
     }
 }

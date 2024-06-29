@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService{
        return null; 
     }
     @Override
-    public CustomerDto get(String custId) throws Exception {
+    public CustomerDto getCustomer(String custId) throws Exception {
         return null;
     }
 
