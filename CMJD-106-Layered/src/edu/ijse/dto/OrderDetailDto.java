@@ -60,6 +60,5 @@ public class OrderDetailDto {
     public String toString() {
         return "OrderDetailDto{" + "orderId=" + orderId + ", ItemCode=" + ItemCode + ", qty=" + qty + ", discount=" + discount + '}';
     }
-    
-    
+      
 }

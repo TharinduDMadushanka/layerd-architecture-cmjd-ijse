@@ -1,16 +1,16 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package edu.ijse.service.custom;
+package edu.ijse.dao.custom;
 
-import edu.ijse.dto.OrderDto;
-import edu.ijse.service.SuperService;
+import edu.ijse.dao.CrudDao;
+import edu.ijse.entity.OrderEntity;
 
 /**
  *
  * @author ASUS
  */
-public interface OrderService extends SuperService{
-    public String placeOrder(OrderDto orderDto) throws Exception;
+public interface OrderDao extends CrudDao<OrderEntity, String>{
+    
 }
