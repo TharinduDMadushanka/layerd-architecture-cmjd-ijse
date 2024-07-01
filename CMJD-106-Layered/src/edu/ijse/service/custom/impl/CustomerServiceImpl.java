@@ -21,7 +21,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public String save(CustomerDto customerDto) throws Exception {
-        return null;
+        CustomerEntity entity = getCustomer(customerDto);
     }
 
     @Override
