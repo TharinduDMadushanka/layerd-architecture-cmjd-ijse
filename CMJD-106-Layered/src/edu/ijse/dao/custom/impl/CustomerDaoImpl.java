@@ -30,7 +30,7 @@ public class CustomerDaoImpl implements CustomerDao{
 
     @Override
     public boolean delete(String id) throws Exception {
-        return false;
+        return CrudUtil.executeUpdate("DELETE FROM customer WHERE CustID = ?", id);
     }
 
     @Override
@@ -55,7 +55,24 @@ public class CustomerDaoImpl implements CustomerDao{
 
     @Override
     public ArrayList<CustomerEntity> getAll() throws Exception {
-        return null;
+        ArrayList<CustomerEntity> customerEntitys = new ArrayList<>();
+        ResultSet rst = CrudUtil.executeQuery("SELECT * FROM customer");
+        
+        while(rst.next()){
+            CustomerEntity entity = new CustomerEntity(
+                    rst.getString("CustID"), 
+                    rst.getString("CustTitle"), 
+                    rst.getString("CustName"), 
+                    rst.getString("DOB"), 
+                    rst.getDouble("salary"), 
+                    rst.getString("CustAddress"),
+                    rst.getString("City"), 
+                    rst.getString("Province"), 
+                    rst.getString("PostalCode"));
+            
+            customerEntitys.add(entity);
+        }
+        return customerEntitys;
     }
     
 }
