@@ -21,7 +21,8 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public String save(CustomerDto customerDto) throws Exception {
-        CustomerEntity entity = getCustomer(customerDto);
+        CustomerEntity entity = getCustomerEntity(customerDto);
+        return CustomerDao.create(entity)? "Success" : "Fail";
     }
 
     @Override
@@ -56,4 +57,29 @@ public class CustomerServiceImpl implements CustomerService{
         return null;
     }
 
+    private CustomerEntity getCustomerEntity(CustomerDto customerDto){
+        return new CustomerEntity(
+        customerDto.getId(),
+        customerDto.getTitle(),
+        customerDto.getName(),
+        customerDto.getDob(),
+        customerDto.getSalary(),
+        customerDto.getAddress(),
+        customerDto.getCity(),
+        customerDto.getProvince(),
+        customerDto.getPostal());
+    }
+    
+    private CustomerDto customerDto(CustomerEntity entity){
+        return new CustomerDto(
+        entity.getId(),
+        entity.getTitle(),
+        entity.getName(),
+        entity.getDob(),
+        entity.getSalary(),
+        entity.getAddress(),
+        entity.getCity(),
+        entity.getProvince(),
+        entity.getPostal());
+    }
 }
