@@ -18,12 +18,14 @@ public class CustomerDaoImpl implements CustomerDao{
 
     @Override
     public boolean create(CustomerEntity t) throws Exception {
-        return false;
+        return CrudUtil.executeUpdate("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)", 
+                t.getId(),t.getTitle(),t.getName(),t.getDob(),t.getSalary(),t.getAddress(),t.getCity(),t.getProvince(),t.getPostal());
     }
 
     @Override
     public boolean update(CustomerEntity t) throws Exception {
-        return false;
+        return CrudUtil.executeUpdate("UPDATE customer SET CustTitle=?,CustName=?,DOB=?,salary=?,CustAddress=?,City=?,Province=?,PostalCode=? WHERE CustID = ?",
+                t.getTitle(),t.getName(),t.getDob(),t.getSalary(),t.getAddress(),t.getCity(),t.getProvince(),t.getPostal(),t.getId());
     }
 
     @Override
