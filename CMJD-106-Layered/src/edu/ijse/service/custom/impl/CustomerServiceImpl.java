@@ -27,33 +27,36 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public String update(CustomerDto customerDto) throws Exception {
-        return null; 
+        CustomerEntity entity = getCustomerEntity(customerDto);
+        return CustomerDao.update(entity)? "Success" : "Fail";
     }
     
     @Override
     public String delete(String custIdString) throws Exception {
-       return null; 
+       return CustomerDao.delete(custIdString)?  "Success" : "Fail";
     }
+    
     @Override
     public CustomerDto getCustomer(String custId) throws Exception {
         CustomerEntity entity = CustomerDao.get(custId);
         if(entity != null){
-            CustomerDto dto = new CustomerDto(entity.getId(),
-                    entity.getTitle(),
-                    entity.getName(),
-                    entity.getDob(),
-                    entity.getSalary(),
-                    entity.getAddress(),
-                    entity.getCity(),
-                    entity.getProvince(),
-                    entity.getPostal());
-            return dto;
+            return getCustomerDto(entity);
         }
         return null;
     }
 
     @Override
     public ArrayList<CustomerDto> getAll() throws Exception {
+        ArrayList<CustomerEntity> customerEntitys = CustomerDao.getAll();
+        
+        if(customerEntitys !=null && !customerEntitys.isEmpty()){
+            ArrayList<CustomerDto> customerDtos = new ArrayList<>();
+            
+            for(CustomerEntity customerEntity:customerEntitys){
+                customerDtos.add(getCustomerDto(customerEntity));
+            }
+            return customerDtos;
+        }
         return null;
     }
 
@@ -70,7 +73,7 @@ public class CustomerServiceImpl implements CustomerService{
         customerDto.getPostal());
     }
     
-    private CustomerDto customerDto(CustomerEntity entity){
+    private CustomerDto getCustomerDto(CustomerEntity entity){
         return new CustomerDto(
         entity.getId(),
         entity.getTitle(),
