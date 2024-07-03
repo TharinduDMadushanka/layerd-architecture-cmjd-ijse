@@ -15,20 +15,24 @@ import edu.ijse.service.custom.impl.OrderServiceImpl;
  */
 public class ServiceFactory {
     
-    private static ServiceFactory serviceFactory;
+    private static ServiceFactory serviceFactory; //Private static variable serviceFactory holds the single instance.
     
-    private ServiceFactory(){}
+    private ServiceFactory(){} //Private constructor to prevent instantiation from outside.
     
-    public static ServiceFactory getInstance(){
+    public static ServiceFactory getInstance(){ //Public static method getInstance returns the single instance, creating it if necessary.
         if(serviceFactory == null){
             serviceFactory=new ServiceFactory();
         }
         return serviceFactory;
     }
     
+    /*
+    The getService method takes a ServiceType enum as a parameter and returns an instance of the corresponding service
+    */
+    
     public SuperService getService(ServiceType serviceType){
     
-        switch (serviceType) {
+        switch (serviceType) {//Uses a switch statement to determine which service to create.
             case ITEM:
                 return new ItemServiceImpl();
             case CUSTOMER:
@@ -40,6 +44,10 @@ public class ServiceFactory {
         }
         
     }
+    
+    /*
+    Defines the types of services (ITEM, CUSTOMER, ORDER) that can be created by the factory.
+    */
     
     public enum ServiceType{    
         ITEM,

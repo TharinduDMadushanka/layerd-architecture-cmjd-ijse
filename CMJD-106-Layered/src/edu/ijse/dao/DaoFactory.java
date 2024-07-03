@@ -18,15 +18,15 @@ public class DaoFactory {
 
     private DaoFactory(){}
 
-    public static DaoFactory getInstance(){
+    public static DaoFactory getInstance(){ //Ensures there is only one instance of DaoFactory throughout the application
         if(daoFactory == null){
             daoFactory = new DaoFactory();
         }
         return daoFactory;
     }
 
-    public SuperDao getDao(DaoTypes type){
-        switch (type) {
+    public SuperDao getDao(DaoTypes type){ //Returns a specific DAO instance (SuperDao) based on the provided DaoTypes enum.
+        switch (type) {// Uses a switch statement to determine which DAO implementation to instantiate and return.
             case ITEM:
                 return new ItemDaoImpl();
                 
@@ -41,7 +41,7 @@ public class DaoFactory {
         }
     }
 
-    public enum DaoTypes{
+    public enum DaoTypes{ // The getDao method acts as a factory method that returns an instance of a DAO based on the DaoTypes enum parameter.
         ITEM, CUSTOMER, ORDER, ORDER_DETAIL;
     }
 }

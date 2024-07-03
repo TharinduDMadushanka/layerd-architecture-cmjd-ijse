@@ -17,24 +17,24 @@ import java.sql.ResultSet;
 public class ItemDaoImpl implements ItemDao{
 
      @Override
-    public boolean create(ItemEntity t) throws Exception {
+    public boolean create(ItemEntity t) throws Exception {//Inserts a new item into the database.
         return CrudUtil.executeUpdate("INSERT INTO item VALUES(?,?,?,?,?)", t.getItemCode(), t.getDescription(), t.getPack(), t.getUnitPrice(), t.getQoh());
     }
     
 
     @Override
-    public boolean update(ItemEntity t) throws Exception {
+    public boolean update(ItemEntity t) throws Exception {// Updates an existing item in the database.
         return CrudUtil.executeUpdate("UPDATE ITEM SET Description = ?, PackSize = ?, UnitPrice = ?, QtyOnHand = ? WHERE ItemCode = ?", 
                 t.getDescription(), t.getPack(), t.getUnitPrice(), t.getQoh(), t.getItemCode());
     }
 
     @Override
-    public boolean delete(String id) throws Exception {
+    public boolean delete(String id) throws Exception {// Deletes an item from the database based on its item code.
         return CrudUtil.executeUpdate("DELETE FROM item WHERE ItemCode = ?", id);
     }
 
     @Override
-    public ItemEntity get(String id) throws Exception {
+    public ItemEntity get(String id) throws Exception {//Retrieves an item from the database based on its item code.
         ResultSet rst = CrudUtil.executeQuery("SELECT * FROM item WHERE ItemCode = ?", id);
         if(rst.next()){
             ItemEntity entity = new ItemEntity(rst.getString("ItemCode"), 
@@ -46,7 +46,7 @@ public class ItemDaoImpl implements ItemDao{
     }
 
     @Override
-    public ArrayList<ItemEntity> getAll() throws Exception {
+    public ArrayList<ItemEntity> getAll() throws Exception {//Retrieves all items from the database.
         ArrayList<ItemEntity> itemEntities = new ArrayList<>();
         ResultSet rst = CrudUtil.executeQuery("SELECT * FROM Item");
         while (rst.next()) {            
