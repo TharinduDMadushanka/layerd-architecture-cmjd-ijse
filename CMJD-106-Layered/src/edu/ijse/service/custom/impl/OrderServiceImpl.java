@@ -32,11 +32,14 @@ public class OrderServiceImpl implements OrderService{
         Connection connection = DBConnection.getInstance().getConnection();
         try {
 
+            // Start transaction
             connection.setAutoCommit(false);
+            // Save order
             OrderEntity orderEntity = new OrderEntity(orderDto.getOrederId(), orderDto.getCustId(), orderDto.getDate());
             if(orderDao.create(orderEntity)){
                 boolean isOrderDetailSaved = true;
 
+                // Save order details
                 for (OrderDetailDto orderDetailDto : orderDto.getOrderDetailDtos()) {
                     OrderDetailEntity orderDetailEntity = new OrderDetailEntity(orderDto.getOrederId(),
                             orderDetailDto.getItemCode(),
@@ -50,6 +53,7 @@ public class OrderServiceImpl implements OrderService{
                 if(isOrderDetailSaved){
 
                     boolean isItemUpdated = true;
+                     // Update item quantities
                     for (OrderDetailDto orderDetailDto : orderDto.getOrderDetailDtos()) {
                         ItemEntity itemEntity = itemDao.get(orderDetailDto.getItemCode());
                         if(itemEntity != null){
@@ -60,14 +64,14 @@ public class OrderServiceImpl implements OrderService{
                         }
                     }
                     if(isItemUpdated){
-                        connection.commit();
+                        connection.commit(); // Commit transaction
                         return "Success";
                     } else{
-                        connection.rollback();
+                        connection.rollback(); // Rollback transaction
                         return "Item Update Error";
                     }
                 } else {
-                    connection.rollback();
+                    connection.rollback(); // Rollback transaction
                     return "Order Detail Save Error";
                 }
 
@@ -77,11 +81,11 @@ public class OrderServiceImpl implements OrderService{
             }
 
         } catch (Exception e) {
-            connection.rollback();
+            connection.rollback(); // Rollback transaction in case of exception
             e.printStackTrace();
             throw e;
         } finally {
-            connection.setAutoCommit(true);
+            connection.setAutoCommit(true);// Restore auto-commit
         }
     }
 
